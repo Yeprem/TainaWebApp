@@ -1,0 +1,63 @@
+﻿@model TainaWebApp.Models.EditPersonViewModel
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<div class="body-content">
+
+    <div class="action-header-container">
+        <h2>Add Person</h2>
+    </div>
+    <hr class="line" />
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="error-message">
+            @Html.Raw(Model.ErrorMessage)
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Add">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="PersonModel.Firstname" class="control-label">First Name</label>
+                    <input asp-for="PersonModel.Firstname" class="form-control" />
+                    <span asp-validation-for="PersonModel.Firstname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PersonModel.Lastname" class="control-label">Last Name</label>
+                    <input asp-for="PersonModel.Lastname" class="form-control" />
+                    <span asp-validation-for="PersonModel.Lastname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PersonModel.Gender" class="control-label">Gender</label>
+                    @Html.DropDownListFor(x => x.PersonModel.Gender, Model.GenderList, string.Empty, new { @class = "form-control" })
+                    <span asp-validation-for="PersonModel.Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PersonModel.Emailaddress" class="control-label">Email Address</label>
+                    <input asp-for="PersonModel.Emailaddress" class="form-control" />
+                    <span asp-validation-for="PersonModel.Emailaddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PersonModel.PhoneNumber" class="control-label">Phone Number</label>
+                    <input asp-for="PersonModel.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PersonModel.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group txtc">
+                    <input type="submit" value="Create" class="action-button-1" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="txtc">
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

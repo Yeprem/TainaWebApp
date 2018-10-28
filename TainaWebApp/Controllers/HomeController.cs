@@ -1,43 +1,100 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
+using TainaWebApp.ControllerService;
 using TainaWebApp.Models;
 
 namespace TainaWebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IHomeControllerService _controllerService;
+
+        public HomeController(IHomeControllerService controllerService)
+        {
+            _controllerService = controllerService;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var result = _controllerService.GetPeople();
+            var model = new HomeViewModel { PersonList = result };           
+
+            return View(model);
+        }  
+        
+        public IActionResult Edit(int id)
+        {
+            var result = _controllerService.GetPerson(id);
+
+            if (result != null)
+            {
+                var model = new EditPersonViewModel
+                {
+                    PersonModel = new PersonModel
+                    {
+                        Id = result.Id,
+                        Firstname = result.Firstname,
+                        Lastname = result.Lastname,
+                        Gender = result.Gender,
+                        Emailaddress = result.Email,
+                        PhoneNumber = result.PhoneNumber
+                    }
+                };
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
         }
 
-        public IActionResult About()
+        [HttpPost]
+        public IActionResult Edit(EditPersonViewModel model)
         {
-            ViewData["Message"] = "Your application description page.";
+            if (ModelState.IsValid)
+            {
+                var result = _controllerService.UpdatePerson(model.PersonModel);
 
-            return View();
+                if (result)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    model.ErrorMessage = "An error occured while updating the Person information.";
+                }
+
+                return View(model);
+            }
+
+            return View(model);
         }
 
-        public IActionResult Contact()
+        public IActionResult Add()
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            var model = new EditPersonViewModel();
+            return View(model);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult Add(EditPersonViewModel model)
         {
-            return View();
-        }
+            if (ModelState.IsValid)
+            {
+                var result = _controllerService.AddPerson(model.PersonModel);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                if (result)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    model.ErrorMessage = "An error occured while adding the Person information.";
+                }
+
+                return View(model);
+            }
+
+            return View(model);
         }
     }
 }

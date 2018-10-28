@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TainaWebApp", "TainaWebApp\TainaWebApp.csproj", "{DC810ECF-08CC-45AD-A688-01BE4D1F58CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TainaWebApp.Service", "TainaWebApp.Service\TainaWebApp.Service.csproj", "{02832C8E-B895-450C-B51C-7A8DFCF82C24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DC810ECF-08CC-45AD-A688-01BE4D1F58CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC810ECF-08CC-45AD-A688-01BE4D1F58CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC810ECF-08CC-45AD-A688-01BE4D1F58CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02832C8E-B895-450C-B51C-7A8DFCF82C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02832C8E-B895-450C-B51C-7A8DFCF82C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02832C8E-B895-450C-B51C-7A8DFCF82C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02832C8E-B895-450C-B51C-7A8DFCF82C24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
