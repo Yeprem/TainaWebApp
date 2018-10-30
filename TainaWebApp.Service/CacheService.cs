@@ -4,17 +4,9 @@ using TainaWebApp.Service.Services;
 
 namespace TainaWebApp.Service
 {
-    class CacheEntry<TResult>
-    {
-        public string Key { get; set; }
-        public TResult Value { get; set; }
-        public DateTime? ExpirationDate { get; set; }
-    }
-
-    /* Currenlty cache is reset when we call the method with the same key
-       It checks if it is expired and renews the value in the cache
-       If there is no call to the method with an already existing key for a long time, cache object will stay in memory
-       We can implement a cahce reset feature which checks the expiration dates and clears them when the cache is expired
+    /* 
+       Currenlty cache is reset when it expires or when Reset method called.
+       If this system is going to be used in distirbuted systems, there must be cache reset listeners.
     */
 
     public class CacheService : ICacheService
@@ -28,9 +20,9 @@ namespace TainaWebApp.Service
 
         public TResult GetOrAdd<TResult>(string key, Func<TResult> result, TimeSpan? duration)
         {
-            if (_memoryCache.TryGetValue(key, out CacheEntry<TResult> item) && (!item.ExpirationDate.HasValue || item.ExpirationDate.Value > DateTime.UtcNow))
+            if (_memoryCache.TryGetValue(key, out TResult item))
             {
-                return item.Value;
+                return item;
             }
             else
             {
@@ -38,15 +30,11 @@ namespace TainaWebApp.Service
 
                 if (value != null)
                 {
-                    var cacheDuration = duration ?? TimeSpan.MaxValue;
-
-                    var cacheEntity = new CacheEntry<TResult>
-                    {
-                        Key = key,
-                        Value = value,
-                        ExpirationDate = duration.HasValue ? DateTime.UtcNow.AddSeconds(duration.Value.TotalSeconds) : default(DateTime?)
-                    };
-                    _memoryCache.Set(key, cacheEntity);
+                    /*
+                        One day is used as a default cache duration, to not serve out-dated data to users for a long time.
+                     */
+                    var cacheDuration = duration ?? TimeSpan.FromDays(1);
+                    _memoryCache.Set(key, value, absoluteExpirationRelativeToNow: cacheDuration);
                 }
 
                 return value;

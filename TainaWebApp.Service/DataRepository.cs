@@ -50,10 +50,21 @@ namespace TainaWebApp.Service
 
         public IEnumerable<PersonDto> GetPeople()
         {
-            using (var database = new SqlConnection(_connectionString))
+            IEnumerable<PersonDto> result = null;
+
+            try
             {
-                return database.Query<PersonDto>("dbo.GetPeople", commandType: System.Data.CommandType.StoredProcedure);
+                using (var database = new SqlConnection(_connectionString))
+                {
+                    result = database.Query<PersonDto>("dbo.GetPeople", commandType: System.Data.CommandType.StoredProcedure);
+                }
             }
+            catch (Exception ex)
+            {
+                _logger.Log(LogLevel.Error, $"Error occured while getting the person list. Exception : {0}", ex.Message); ;
+            }
+
+            return result;
         }
 
         public bool TryUpdatePerson(PersonDto dto)
@@ -66,8 +77,8 @@ namespace TainaWebApp.Service
                 {
                     database.Execute("dbo.UpdatePerson", new
                     {
-                        Id = dto.Id,
-                        FirstName = dto.Firstname,
+                        PersonId = dto.PersonId,
+                        Firstname = dto.Firstname,
                         Surname = dto.Surname,
                         EmailAddress = dto.EmailAddress,
                         Gender = dto.Gender,
@@ -79,7 +90,7 @@ namespace TainaWebApp.Service
             }
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Error, $"Error occured while updating person with Id {0}. Exception : {1}", dto.Id.Value, ex.Message);
+                _logger.Log(LogLevel.Error, $"Error occured while updating person with Id {0}. Exception : {1}", dto.PersonId.Value, ex.Message);
             }
 
             return result;

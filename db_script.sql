@@ -24,7 +24,7 @@ GO
 -----------------
 
 CREATE PROCEDURE dbo.UpdatePerson 
-	@Id bigint,
+	@PersonId bigint,
 	@Firstname nvarchar(30),
 	@Surname nvarchar(40),
 	@Gender nvarchar(6),
@@ -39,7 +39,7 @@ BEGIN
 		   Gender = @Gender,
 		   EmailAddress = @EmailAddress,
 		   PhoneNumber = isnull(@PhoneNumber, PhoneNumber)
-	where  PersonId = @Id
+	where  PersonId = @PersonId
 END
 GO
 
@@ -48,7 +48,7 @@ GO
 CREATE PROCEDURE [dbo].[GetPeople]
 AS
 BEGIN
-	SELECT PersonId as Id,
+	SELECT PersonId,
 		   Firstname,
 		   Surname,
 		   Gender,

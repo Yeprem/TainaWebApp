@@ -45,9 +45,10 @@ body {
 }
 
 .error-message {
-    padding: 10px 5px 10px 5 px;
+    padding: 10px;
     background-color: #a94442;
     color: #ffffff;
+    margin-bottom: 10px;
 }
 
 .txtc {

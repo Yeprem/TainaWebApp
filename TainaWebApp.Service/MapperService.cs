@@ -9,7 +9,7 @@ namespace TainaWebApp.Service
         {
             return new Person
             {
-                Id = dto.Id,
+                Id = dto.PersonId,
                 Firstname = dto.Firstname,
                 Lastname = dto.Surname,
                 Gender = dto.Gender,
@@ -22,7 +22,7 @@ namespace TainaWebApp.Service
         {
             return new PersonDto
             {
-                Id = person.Id,
+                PersonId = person.Id,
                 Firstname = person.Firstname,
                 Surname = person.Lastname,
                 Gender = person.Gender,

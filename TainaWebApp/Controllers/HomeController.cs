@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net.Mail;
 using TainaWebApp.ControllerService;
 using TainaWebApp.Models;
 
@@ -60,7 +59,7 @@ namespace TainaWebApp.Controllers
                 }
                 else
                 {
-                    model.ErrorMessage = "An error occured while updating the Person information.";
+                    model.ErrorMessage = "An error occured while updating the person information.";
                 }
 
                 return View(model);
@@ -88,7 +87,7 @@ namespace TainaWebApp.Controllers
                 }
                 else
                 {
-                    model.ErrorMessage = "An error occured while adding the Person information.";
+                    model.ErrorMessage = "An error occured while adding the person to the list.";
                 }
 
                 return View(model);

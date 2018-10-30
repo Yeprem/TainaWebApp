@@ -2,7 +2,7 @@ Name : Sevan Yeprem Bozoglanoglu
 
 Instruction:
 - Run db_script.sql file in MSSQL Server
-- Open Projct in Visual Studio
+- Open Project in Visual Studio
 - Run Project
 
 Libraries Used:
@@ -11,3 +11,4 @@ Libraries Used:
 	
 Assumptions:
 - No unit tests written since it is not mentioned in requirements
+- For the simplicity, search, sort and paging are not implemented, but for commercial use these functionalities should be implemented
